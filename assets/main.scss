@@ -1,0 +1,153 @@
+@import '../node_modules/easings-css/easings';
+
+@import
+  'styles/variables',
+  'styles/mixins',
+  'styles/base';
+
+// Bootstrap
+
+@import '~bootstrap/scss/_functions';
+@import '~bootstrap/scss/_variables';
+@import '~bootstrap/scss/_mixins';
+@import '~bootstrap/scss/_images';
+@import '~bootstrap/scss/_utilities';
+@import '~bootstrap/scss/bootstrap-grid';
+
+// stylelint-disable-next-line scss/at-import-no-partial-leading-underscore, scss/at-import-partial-extension-blacklist
+@import '../Components/**/_style.scss';
+
+@import 'styles/print';
+
+
+
+/*
+// ANCHOR: listProjects
+*/
+
+.listProject_item {	
+	min-height: 180px;
+  display: flex;
+  position: relative;
+  padding: 30px;
+
+  @media (min-width: 992px) {
+    padding: 60px;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 15px;
+    right: 15px;
+    z-index: -1;
+    border-radius: 20px;
+    background-color: #333;
+  }
+
+  .listProject_item__title {
+    margin-top: auto;
+    margin-bottom: auto;
+    color: #fff;
+    font-weight: 800;
+  }
+
+  a {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+  }
+}
+
+
+/*
+// ANCHOR: single Project
+*/
+
+.contentTabs_item {
+	background-color: #ccc;
+	border-radius: 20px;
+  padding: 30px;
+  
+  &:not(:first-child) {
+    margin-top: 45px;
+  }
+}
+
+.contentTabs_item__todo {
+  min-height: 40px;
+}
+
+.contentTabs_item__todoItem {
+	background-color: #eee;
+	border-radius: 20px;
+  padding: 15px;
+  
+  &:not(:first-child) {
+    margin-top: 20px;
+  }
+}
+
+/*
+// ANCHOR: Media list
+*/
+
+.media-list__item {
+  display: flex;
+  flex: wrap;
+}
+
+.media-list__cell {
+  width: 100%;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    width: 25%;
+  }
+}
+
+.media-list__preview {
+
+  text-align: left;
+
+  @media (min-width: 768px) {
+    width: 150px;
+  }
+
+  img {
+    max-width: 100px;
+    max-height: 100px;
+    width: auto;
+    height: auto;
+  }
+}
+
+.media-list__file-type {
+
+  @media (min-width: 768px) {
+      width: 200px;
+  }
+
+}
+
+.media-list__actions {
+
+  width: 120px;
+  text-align: right;
+
+  img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    display: inline-block;
+  }
+  
+  a {
+    margin-left: 15px;
+  }
+}
