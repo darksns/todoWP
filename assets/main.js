@@ -27,12 +27,13 @@ $(document).ready(function () {
   drake.on('drop', function(el, target){
     $.ajax({
       type: "post",
-      dataType: "json",
+      // dataType: "json",
       url: "/wp-admin/admin-ajax.php",
       data: {
         action:'changeTab',
         id: $(el).data('id'),
-        term_id: $(target).data('term-id'),
+        term_slug: $(target).data('term-slug'),
+        site_id: $(target).data('site-id'),
       },
       success: function(result){
         console.log(result);
@@ -41,27 +42,27 @@ $(document).ready(function () {
 
     var posts = '';
 
-    $(target).children('.contentTabs_item__todoItem').each(function (i) {
-      if ( i === 0) {
-        posts = 'post[]='+$(this).data('id');
-      }else{
-        posts = posts + '&post[]='+$(this).data('id');
-      }
+    // $(target).children('.contentTabs_item__todoItem').each(function (i) {
+    //   if ( i === 0) {
+    //     posts = 'post[]='+$(this).data('id');
+    //   }else{
+    //     posts = posts + '&post[]='+$(this).data('id');
+    //   }
       
-    });
+    // });
 
-    $.ajax({
-      type: "post",
-      dataType: "json",
-      url: "/wp-admin/admin-ajax.php",
-      data: {
-        action:'update-menu-order',
-        order: posts,
-      },
-      success: function(result){
-        console.log(result);
-      }
-    });
+    // $.ajax({
+    //   type: "post",
+    //   dataType: "json",
+    //   url: "/wp-admin/admin-ajax.php",
+    //   data: {
+    //     action:'update-menu-order',
+    //     order: posts,
+    //   },
+    //   success: function(result){
+    //     console.log(result);
+    //   }
+    // });
   })
 })
 

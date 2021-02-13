@@ -1,0 +1,59 @@
+{% extends contentOnly ? 'templates/_contentOnly.twig' : 'templates/_document.twig' %}
+
+{% block content %}
+    {% if current_user.user_login %}
+        <div class="container mb-5">
+            <h1>
+                {{ site.name }}
+            </h1>
+            <div class="media">
+                <h2>Media</h2>
+                <div class="media-list">
+                {% for file in media %}
+                    <div class="media-list__item">
+                    <div class="media-list__cell media-list__preview">
+                        {% if file.post_mime_type == 'image/jpeg' %}
+                        <img src="{{ Image(file.ID).src }}" alt="">                  
+                        {% endif %}
+                    </div>
+                    <div class="media-list__cell media-list__file-name">
+                        {{file.post_title}}
+                    </div>
+                    <div class="media-list__cell media-list__file-type">
+                        {{file.post_mime_type}}
+                    </div>
+                    <div class="media-list__cell media-list__actions">
+                        <img class="media-list__delete" data-id="{{file.ID}}" src="{{theme.link}}/assets/images/trash.svg" alt="Elimina">
+                        <a href="{{ file.guid }}" download><img class="media-list__download" src="{{theme.link}}/assets/images/download.svg" alt="Scarica"></a>
+                    </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="contentTabs">
+                {% for tab in tabs %}
+                    {% set term_id = tab.term_id %}
+                    <div class="contentTabs_item">
+                        <h3>{{tab.name}}</h3>
+                        <div class="contentTabs_item__todo" data-term-slug="{{tab.slug}}" data-site-id="{{site.id}}">
+                            {% for post in tab.posts({
+                                posts_per_page: -1,
+                                orderby: 'menu_order',
+                                order: 'ASC',
+                            }) %}
+                                <div class="contentTabs_item__todoItem" data-id="{{post.id}}">
+                                    <div class="contentTabs_item__todoItem_title">
+                                        {{post.title}}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -43,7 +43,10 @@ if ( isset($_POST['action']) && $_POST['action'] == 'log-in' ) {
 
 function changeTab() {        
     //wp_remove_object_terms($_POST['id'],$_POST['term_id'],'progetti');
-    wp_set_post_terms( $_POST['id'], $_POST['term_id'], 'progetti', false );
+    switch_to_blog( $_POST['site_id'] );
+    $term_taxonomy_ids = wp_set_object_terms( $_POST['id'], array($_POST['term_slug']), 'progetti', false );
+
+    restore_current_blog();
     wp_die();
 }
 

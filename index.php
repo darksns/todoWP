@@ -6,6 +6,7 @@ use Timber\User;
 use Timber\Site;
 use Timber\PostQuery;
 use Flynt\Utils\Options;
+use Timber\Term;
 
 use const Flynt\Archives\POST_TYPES;
 
@@ -38,14 +39,22 @@ if( is_main_site() ) {
     }
 
     $context['projects'] = $projects;
+
+    Timber::render('templates/index.twig', $context);
+}else{
+    $context['media'] = new PostQuery(
+        array(
+            'post_type' => 'attachment',
+            'post_status' => 'inherit',
+            'posts_per_page' => -1,
+        )
+    );
+
+    $args = array(
+        'taxonomy' => 'progetti',
+        'hide_empty' => false,
+    );
+    $context['tabs'] =  Timber::get_terms($args);
+    
+    Timber::render('templates/home.twig', $context);
 }
-
-$context['media'] = new PostQuery(
-    array(
-        'post_type' => 'attachment',
-        'post_status' => 'inherit',
-        'posts_per_page' => -1,
-    )
-);
-
-Timber::render('templates/index.twig', $context);

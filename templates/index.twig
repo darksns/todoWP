@@ -43,38 +43,7 @@
               <a href="{{project.link}}"></a>
             </div>
           {% endfor %}
-        </div>
-      {% else %}
-        <h1>
-          {{ site.name }}
-        </h1>
-        <div class="media">
-          <h2>Media</h2>
-          <div class="media-list">
-            {% for file in media %}
-              <div class="media-list__item">
-                <div class="media-list__cell media-list__preview">
-                  {% if file.post_mime_type == 'image/jpeg' %}
-                    <img src="{{ Image(file.ID).src }}" alt="">                  
-                  {% endif %}
-                </div>
-                <div class="media-list__cell media-list__file-name">
-                  {{file.post_title}}
-                </div>
-                <div class="media-list__cell media-list__file-type">
-                  {{file.post_mime_type}}
-                </div>
-                <div class="media-list__cell media-list__actions">
-                  <img class="media-list__delete" data-id="{{file.ID}}" src="{{theme.link}}/assets/images/trash.svg" alt="Elimina">
-                  <a href="{{ file.guid }}" download><img class="media-list__download" src="{{theme.link}}/assets/images/download.svg" alt="Scarica"></a>
-                </div>
-              </div>
-            {% endfor %}
-            <pre>
-              {{ dump(media) }}
-            </pre>
-          </div>
-        </div>
+        </div>        
       {% endif %}
     </div>
   {% endif %}

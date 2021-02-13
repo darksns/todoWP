@@ -1,4 +1,4 @@
-const host = 'http://todo.test'
+const host = 'http://todo-git.test'
 const dest = './dist'
 
 function getCopyConfig (source) {
