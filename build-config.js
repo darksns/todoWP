@@ -1,4 +1,4 @@
-const host = 'http://todo-git.test'
+const host = 'https://todo.test'
 const dest = './dist'
 
 function getCopyConfig (source) {
@@ -52,7 +52,7 @@ module.exports = {
       './Components/**/*.{php,twig}'
     ],
     watch: true,
-    https: false
+    https: true
   },
   webpackDevMiddleware: {
     stats: false,
