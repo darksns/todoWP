@@ -25,44 +25,54 @@ $(document).ready(function () {
   var drake = dragula(containers);
 
   drake.on('drop', function(el, target){
-    $.ajax({
-      type: "post",
-      // dataType: "json",
-      url: "/wp-admin/admin-ajax.php",
-      data: {
-        action:'changeTab',
-        id: $(el).data('id'),
-        term_slug: $(target).data('term-slug'),
-        site_id: $(target).data('site-id'),
-      },
-      success: function(result){
-        console.log(result);
-      }
+
+    const changeTab = new Promise((resolve, reject) => {  
+      resolve(
+        $.ajax({
+          type: "post",
+          // dataType: "json",
+          url: "/wp-admin/admin-ajax.php",
+          data: {
+            action:'changeTab',
+            id: $(el).data('id'),
+            term_slug: $(target).data('term-slug'),
+            site_id: $(target).data('site-id'),
+          },
+          success: function(result){
+            console.log(result);
+          }
+        })
+      );
     });
 
     var posts = '';
 
-    // $(target).children('.contentTabs_item__todoItem').each(function (i) {
-    //   if ( i === 0) {
-    //     posts = 'post[]='+$(this).data('id');
-    //   }else{
-    //     posts = posts + '&post[]='+$(this).data('id');
-    //   }
+    $(target).children('.contentTabs_item__todoItem').each(function (i) {
+      if ( i === 0) {
+        posts = 'post[]='+$(this).data('id');
+      }else{
+        posts = posts + '&post[]='+$(this).data('id');
+      }
       
-    // });
+    });
 
-    // $.ajax({
-    //   type: "post",
-    //   dataType: "json",
-    //   url: "/wp-admin/admin-ajax.php",
-    //   data: {
-    //     action:'update-menu-order',
-    //     order: posts,
-    //   },
-    //   success: function(result){
-    //     console.log(result);
-    //   }
-    // });
+    changeTab.then( (result, displayError ) => {
+
+      $.ajax({
+        type: "post",
+        dataType: "json",
+        url: "/wp-admin/admin-ajax.php",
+        data: {
+          action:'update-menu-order',
+          order: posts,
+          site_id: $(target).data('site-id'),
+        },
+        success: function(result){
+          console.log(result);
+        }
+      });
+
+    });
   })
 })
 

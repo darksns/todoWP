@@ -50,5 +50,49 @@ function changeTab() {
     wp_die();
 }
 
-add_action( 'wp_ajax_nopriv_changeTab', __NAMESPACE__ . '\\changeTab' );
 add_action( 'wp_ajax_changeTab', __NAMESPACE__ . '\\changeTab' );
+
+function update_menu_order() {
+    switch_to_blog( $_POST['site_id'] );
+
+    global $wpdb;
+    
+    parse_str($_POST['order'], $data);
+
+    if (!is_array($data))
+        return false;
+
+    $id_arr = array();
+    foreach ($data as $key => $values) {
+        foreach ($values as $position => $id) {
+            $id_arr[] = $id;
+        }
+    }
+
+    echo 'debug1';
+
+    $menu_order_arr = array();
+    foreach ($id_arr as $key => $id) {
+        $results = $wpdb->get_results("SELECT menu_order FROM $wpdb->posts WHERE ID = " . intval($id));
+        foreach ($results as $result) {
+            $menu_order_arr[] = $result->menu_order;
+        }
+    }
+
+    echo 'debug2';
+
+    sort($menu_order_arr);
+
+    foreach ($data as $key => $values) {
+        foreach ($values as $position => $id) {
+            $wpdb->update($wpdb->posts, array('menu_order' => $menu_order_arr[$position]), array('ID' => intval($id)));
+        }
+    }
+
+    echo 'debug3';
+    restore_current_blog();
+    wp_die();
+
+}
+
+add_action('wp_ajax_update-menu-order', __NAMESPACE__ . '\\update_menu_order');

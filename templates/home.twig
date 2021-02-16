@@ -5,7 +5,10 @@
         <div class="container mb-5">
             <h1>
                 {{ site.name }}
-            </h1>
+            </h1> 
+
+            {# SEZIONE MEDIA
+
             <div class="media">
                 <h2>Media</h2>
                 <div class="media-list">
@@ -29,11 +32,11 @@
                     </div>
                 {% endfor %}
                 </div>
-            </div>
+            </div>            #}
         </div>
 
-        <div class="container">
-            <div class="contentTabs">
+        <div class="container-fluid contentTabs">
+            <div class="contentTabs_list">
                 {% for tab in tabs %}
                     {% set term_id = tab.term_id %}
                     <div class="contentTabs_item">

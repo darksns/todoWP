@@ -69,13 +69,22 @@
 // ANCHOR: single Project
 */
 
+.contentTabs_list {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: flex-start;
+  overflow-x: auto;
+}
+
 .contentTabs_item {
 	background-color: #ccc;
 	border-radius: 20px;
   padding: 30px;
-  
+  width: 400px;
+
   &:not(:first-child) {
-    margin-top: 45px;
+    margin-left: 2rem;
   }
 }
 
