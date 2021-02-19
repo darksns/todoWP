@@ -69,8 +69,6 @@ function update_menu_order() {
         }
     }
 
-    echo 'debug1';
-
     $menu_order_arr = array();
     foreach ($id_arr as $key => $id) {
         $results = $wpdb->get_results("SELECT menu_order FROM $wpdb->posts WHERE ID = " . intval($id));
@@ -79,8 +77,6 @@ function update_menu_order() {
         }
     }
 
-    echo 'debug2';
-
     sort($menu_order_arr);
 
     foreach ($data as $key => $values) {
@@ -88,11 +84,53 @@ function update_menu_order() {
             $wpdb->update($wpdb->posts, array('menu_order' => $menu_order_arr[$position]), array('ID' => intval($id)));
         }
     }
-
-    echo 'debug3';
     restore_current_blog();
     wp_die();
 
 }
 
 add_action('wp_ajax_update-menu-order', __NAMESPACE__ . '\\update_menu_order');
+
+function newTab() {        
+    switch_to_blog( $_POST['site_id'] );
+    
+    $term = wp_insert_term( $_POST['tab_name'], 'progetti' );
+
+    $term = get_term( $term['term_id'], 'progetti' );
+    $slug = $term->slug;
+    
+    echo $slug;
+
+    restore_current_blog();
+    wp_die();
+}
+
+add_action( 'wp_ajax_newTab', __NAMESPACE__ . '\\newTab' );
+
+function deletePost() {        
+    switch_to_blog( $_POST['site_id'] );
+    
+    $idPost = $_POST['idPost'];
+
+    wp_delete_post($idPost,true);
+
+    restore_current_blog();
+    wp_die();
+}
+
+add_action( 'wp_ajax_deletePost', __NAMESPACE__ . '\\deletePost' );
+
+function deteleTab() {        
+    switch_to_blog( $_POST['site_id'] );
+    
+    $termSlug = $_POST['termSlug'];
+
+    $term = get_term_by('slug', $termSlug, 'progetti');
+
+    wp_delete_term($term->term_id, 'progetti');
+
+    restore_current_blog();
+    wp_die();
+}
+
+add_action( 'wp_ajax_deteleTab', __NAMESPACE__ . '\\deteleTab' );

@@ -35,11 +35,14 @@
             </div>            #}
         </div>
 
-        <div class="container-fluid contentTabs">
+        <div class="container-fluid contentTabs" data-simplebar>
             <div class="contentTabs_list">
                 {% for tab in tabs %}
                     {% set term_id = tab.term_id %}
                     <div class="contentTabs_item">
+                        <div class="contentTabs_item__delete">
+                            <i class="fi-rr-cross-circle"></i> <span>Sei sicuro?</span>
+                        </div>
                         <h3>{{tab.name}}</h3>
                         <div class="contentTabs_item__todo" data-term-slug="{{tab.slug}}" data-site-id="{{site.id}}">
                             {% for post in tab.posts({
@@ -56,6 +59,24 @@
                         </div>
                     </div>
                 {% endfor %}
+
+                {# Create new tab #}
+
+                <div class="contentTabs_item contentTabs_item--newTab" data-site-id="{{site.id}}">
+                    <input type="text" name="newTab_name" id="newTab_name" placeholder="Nome Tab">
+                    <button>
+                        <i class="fi-rr-angle-right"></i>
+                    </button>
+                </div>
+
+                <div class="contentTabs_item contentTabs_item--clone">
+                    <div class="contentTabs_item__delete">
+                        <i class="fi-rr-cross-circle"></i> <span>Sei sicuro?</span>
+                    </div>
+                    <h3></h3>
+                    <div class="contentTabs_item__todo" data-term-slug="" data-site-id="{{site.id}}">
+                    </div>
+                </div>
             </div>
         </div>
     {% endif %}

@@ -10,6 +10,9 @@ import installCE from 'document-register-element/pony'
 import dragula from 'dragula/dist/dragula'
 import 'dragula/dist/dragula.min.css'
 
+import 'simplebar';
+import 'simplebar/dist/simplebar.css';
+
 window.jQuery = $
 
 window.lazySizesConfig = window.lazySizesConfig || {}
@@ -17,6 +20,80 @@ window.lazySizesConfig.preloadAfterLoad = true
 require('lazysizes')
 
 $(document).ready(function () {
+
+  $('#newTab_name').keypress(function(e) {
+    var key = e.which;
+    if (key == 13) // the enter key code
+    {
+      $('.contentTabs_item--newTab button').click();
+      return false;
+    }
+  });
+
+  $('body').on('click','.contentTabs_item__delete',function() {
+    if($(this).hasClass('confirm')) {
+      let tab = $(this).parent();
+      let termSlug = $(this).parent().find('.contentTabs_item__todo').data('term-slug');
+      let siteID = $(this).parent().find('.contentTabs_item__todo').data('site-id');
+
+      $(this).parent().find('.contentTabs_item__todoItem').each(function() {
+        let idPost = $(this).data('id');
+        $.ajax({
+          type: "post",
+          url: "/wp-admin/admin-ajax.php",
+          data: {
+            action:'deletePost',
+            idPost: idPost,
+            site_id: siteID,
+          },
+          success: function(result){     
+            
+          }
+        })
+      });
+
+      $.ajax({
+        type: "post",
+        url: "/wp-admin/admin-ajax.php",
+        data: {
+          action:'deteleTab',
+          termSlug: termSlug,
+          site_id: siteID,
+        },
+        success: function(result){     
+          tab.remove();
+        }
+      })
+    }else{
+      $(this).addClass('confirm');
+    }
+
+  });
+
+  $('.contentTabs_item--newTab button').click(function() {
+    let name = $(this).parent().find('input').val();
+    let siteID = $(this).parent().data('site-id');
+    if(name != '') {
+      $.ajax({
+        type: "post",
+        url: "/wp-admin/admin-ajax.php",
+        data: {
+          action:'newTab',
+          tab_name: name,
+          site_id: siteID,
+        },
+        success: function(result){        
+          let newTab =$('.contentTabs_item--clone').clone().insertBefore('.contentTabs_item--newTab');
+          newTab.find('h3').html(name);
+          $('.contentTabs_item--newTab input').val('');
+          newTab.find('.contentTabs_item__todo').data('term-slug',result);
+          newTab.removeClass('contentTabs_item--clone');
+          drake.canMove('.contentTabs_item__todoItem');
+        }
+      })
+    }
+  });
+
   feather.replace({
     'stroke-width': 1
   })
