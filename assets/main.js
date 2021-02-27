@@ -30,6 +30,10 @@ $(document).ready(function () {
     }
   });
 
+	/*--------------------------------------------
+	DELETE TAB
+	--------------------------------------------*/
+
   $('body').on('click','.contentTabs_item__delete',function() {
     if($(this).hasClass('confirm')) {
       let tab = $(this).parent();

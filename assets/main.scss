@@ -81,13 +81,13 @@
 .contentTabs_item {
 	background-color: #ccc;
 	border-radius: 20px;
-  padding: 30px;
-  width: 400px;
-  position: relative;
+	padding: 30px 30px 60px;
+	width: 400px;
+	position: relative;
 
-  &:not(:first-child) {
-    margin-left: 2rem;
-  }
+	&:not(:first-child) {
+		margin-left: 2rem;
+	}
 }
 
 .contentTabs_item__todo {
@@ -108,7 +108,8 @@
   display: none;
 }
 
-.contentTabs_item__delete {
+.contentTabs_item__delete,
+.contentTabs_item__add {
   cursor: pointer;
   position: absolute;
   right: 10px;
@@ -135,6 +136,16 @@
     }
   }
 
+}
+
+.contentTabs_item__add {
+	top: auto;
+	bottom: 5px;
+	color: darkgreen;
+
+	&:hover {
+		opacity: .5;
+	}
 }
 
 #newTab_name {
