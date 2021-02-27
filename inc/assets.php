@@ -18,6 +18,8 @@ add_action('wp_enqueue_scripts', function () {
     wp_script_add_data('Flynt/assets', 'defer', true);
     $data = [
         'templateDirectoryUri' => get_template_directory_uri(),
+        'root' => esc_url_raw( rest_url() ),
+        'nonce' => wp_create_nonce( 'wp_rest' )
     ];
     wp_localize_script('Flynt/assets', 'FlyntData', $data);
     Asset::enqueue([

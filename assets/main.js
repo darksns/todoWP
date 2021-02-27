@@ -21,6 +21,23 @@ require('lazysizes')
 
 $(document).ready(function () {
 
+  // let endpoint = FlyntData.root + 'wp/v2/posts';
+
+  // $.ajax({
+  //   url: endpoint,
+  //   method: 'POST', 
+  //   beforeSend: function(xhr){
+  //     xhr.setRequestHeader( 'X-WP-Nonce', FlyntData.nonce );
+  //   },
+  //   data: {
+  //     title: 'post ajax',
+  //   }
+  // }).done(function(response){
+  //   alert('OK');
+  // }).fail(function(response){
+  //   alert( response.responseJSON.message );
+  // });
+
   $('#newTab_name').keypress(function(e) {
     var key = e.which;
     if (key == 13) // the enter key code
