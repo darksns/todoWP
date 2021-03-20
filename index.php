@@ -18,12 +18,6 @@ if ( isset($_POST['action']) && $_POST['action'] == 'log-in' ) {
     $context['action'] = 'log-in';    
 }
 
-$args = array(
-    'taxonomy' => 'progetti',  
-    'parent' => 0,      
-);
-$context['projects'] =  Timber::get_terms($args);
-
 if (isset($_GET['contentOnly'])) {
     $context['contentOnly'] = true;
 }
@@ -51,7 +45,7 @@ if( is_main_site() ) {
     );
 
     $args = array(
-        'taxonomy' => 'progetti',
+        'taxonomy' => 'tab',
         'hide_empty' => false,
     );
     $context['tabs'] =  Timber::get_terms($args);

@@ -1,13 +1,13 @@
 {% extends contentOnly ? 'templates/_contentOnly.twig' : 'templates/_document.twig' %}
 
 {% block content %}
-    {% if current_user.user_login %}
-        <div class="container mb-5">
-            <h1>
-                {{ site.name }}
-            </h1> 
+{% if current_user.user_login %}
+<div class="container mb-5">
+    <h1>
+    {{ site.name }}
+    </h1>
 
-            {# SEZIONE MEDIA
+    {# SEZIONE MEDIA
 
             <div class="media">
                 <h2>Media</h2>
@@ -33,60 +33,56 @@
                 {% endfor %}
                 </div>
             </div>            #}
-        </div>
+</div>
 
-        <div class="container-fluid contentTabs" data-simplebar>
-            <div class="contentTabs_list">
-                {% for tab in tabs %}
-                    {% set term_id = tab.term_id %}
-                    <div class="contentTabs_item">
-                        <div class="contentTabs_item__delete">
-                            <i class="fi-rr-cross-circle"></i> <span>Sei sicuro?</span>
-                        </div>
-                        <h3>{{tab.name}}</h3>
-                        <div class="contentTabs_item__todo" data-term-slug="{{tab.slug}}" data-site-id="{{site.id}}">
-                            {% for post in tab.posts({
+<div class="container-fluid" data-simplebar>
+    <div class="tabs">
+        {% for tab in tabs %}
+        {% set term_id = tab.term_id %}
+        <div class="tab">
+            <div class="tab-delete">
+                <i class="fi-rr-cross-circle"></i> <span>Sei sicuro?</span>
+            </div>
+            <h3>{{tab.name}}</h3>
+            <div class="todos" data-term-id="{{tab.id}}">
+                {% for post in tab.posts({
                                 posts_per_page: -1,
                                 orderby: 'menu_order',
                                 order: 'ASC',
                             }) %}
-                                <div class="contentTabs_item__todoItem" data-id="{{post.id}}">
-                                    <div class="contentTabs_item__todoItem_title">
-                                        {{post.title}}
-                                    </div>
-                                </div>
-                            {% endfor %}
-
-							<div class="contentTabs_item__todoItem" data-id="{{post.id}}">
-								<div class="contentTabs_item__todoItem_title">
-									<input id="" value="" placeholder="{{ 'Aggiungi un nuovo todo'|e('esc_html') }}">
-									<button>
-                        				<i class="fi-rr-angle-right"></i>
-                    				</button>
-								</div>
-							</div>
-                        </div>
-						<div class="contentTabs_item__add">
-                        	<i class="fi-rr-add"></i></i>
-                    	</div>
+                <div class="todo" data-id="{{post.id}}">
+                    <div class="todo__title">
+                        {{post.title}}
                     </div>
-                {% endfor %}
-
-                {# Create new tab #}
-
-                <div class="contentTabs_item contentTabs_item--newTab" data-site-id="{{site.id}}">
-                    <input type="text" name="newTab_name" id="newTab_name" placeholder="Nome Tab">
+                </div>
+                {% endfor %}                
+            </div>
+            <div class="todo__add todo" data-id="{{post.id}}">
+                <div class="todo__add-title">
+                    <input id="" value="" placeholder="{{ 'Aggiungi un nuovo todo'|e('esc_html') }}">
                     <button>
                         <i class="fi-rr-angle-right"></i>
                     </button>
                 </div>
-
-                <div class="contentTabs_item contentTabs_item--clone">
-                    <h3></h3>
-                    <div class="contentTabs_item__todo" data-term-slug="" data-site-id="{{site.id}}">
-                    </div>
-                </div>
             </div>
         </div>
-    {% endif %}
+        {% endfor %}
+
+        {# Create new tab #}
+
+        <div class="tab tab-add">
+            <input type="text" name="tab_name" id="tab_name" placeholder="Nome Tab">
+            <button>
+                <i class="fi-rr-angle-right"></i>
+            </button>
+        </div>
+
+        <div class="tab tab--empty">
+            <h3></h3>
+            <div class="todos" data-term-id="">
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}

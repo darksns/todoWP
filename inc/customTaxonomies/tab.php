@@ -8,17 +8,17 @@
 
 namespace Flynt\CustomTaxonomies;
 
-function registerExampleTaxonomy()
+function registerTabTaxonomy()
 {
     $labels = [
-        'name'                       => _x('Progetti', 'Taxonomy General Name', 'flynt'),
-        'singular_name'              => _x('Progetto', 'Taxonomy Singular Name', 'flynt'),
-        'menu_name'                  => __('Progetto', 'flynt'),
+        'name'                       => _x('Tabs', 'Taxonomy General Name', 'flynt'),
+        'singular_name'              => _x('Tab', 'Taxonomy Singular Name', 'flynt'),
+        'menu_name'                  => __('Tab', 'flynt'),
     //     'all_items'                  => __('All Items', 'flynt'),
     //     'parent_item'                => __('Parent Item', 'flynt'),
     //     'parent_item_colon'          => __('Parent Item:', 'flynt'),
     //     'new_item_name'              => __('New Item Name', 'flynt'),
-        'add_new_item'               => __('Crea un nuovo progetto', 'flynt'),
+        'add_new_item'               => __('Crea una nuova tab', 'flynt'),
     //     'edit_item'                  => __('Edit Item', 'flynt'),
     //     'update_item'                => __('Update Item', 'flynt'),
     //     'view_item'                  => __('View Item', 'flynt'),
@@ -40,9 +40,21 @@ function registerExampleTaxonomy()
         'show_admin_column'          => true,
         'show_in_nav_menus'          => true,
         'show_tagcloud'              => true,
+        'rest_base'                  => 'tab',
+        'rest_controller_class'      => 'WP_REST_Terms_Controller',
+        'show_in_rest'               => true,
     ];
 
-    register_taxonomy('progetti', ['todo'], $args);
+    register_taxonomy('tab', ['todo'], $args);
 }
 
-add_action('init', 'Flynt\\CustomTaxonomies\\registerExampleTaxonomy');
+add_action('init', 'Flynt\\CustomTaxonomies\\registerTabTaxonomy');
+
+function rest_route_for_tab( $route, $term ) {
+    if ( $term->taxonomy === 'tab' ) {
+        $route = '/wp/v2/tab/' . $term->term_id;
+    }
+ 
+    return $route;
+}
+add_filter( 'rest_route_for_post', 'Flynt\\CustomTaxonomies\\rest_route_for_tab', 10, 2 );

@@ -13,13 +13,6 @@
     "build": "run-s --silent checkVersion clean build:production build:rev",
     "build:production": "cross-env NODE_ENV=production webpack --progress --display=minimal",
     "build:rev": "gulp rev",
-    "lint": "run-p --silent lint:*",
-    "lint:scripts": "cross-env eslint '**/*.js'",
-    "lint:styles": "cross-env stylelint '**/*.scss'",
-    "lint:php": "cross-env ./vendor/bin/phpcs",
-    "lint:scripts:fix": "cross-env eslint '**/*.js' --fix",
-    "lint:styles:fix": "cross-env stylelint '**/*.scss' --fix",
-    "lint:php:fix": "cross-env ./vendor/bin/phpcbf",
     "release": "standard-version -a"
   },
   "devDependencies": {
